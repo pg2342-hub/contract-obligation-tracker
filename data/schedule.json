@@ -1,0 +1,703 @@
+{
+  "schema_version": 1,
+  "agreements": [
+    {
+      "id": "nda-kestrel",
+      "title": "Mutual NDA with Kestrel Robotics",
+      "counterparty": "Kestrel Robotics, Inc.",
+      "type": "Mutual NDA",
+      "docs": [
+        "nda-kestrel",
+        "mnda-standard-terms-v1"
+      ],
+      "key_terms": [
+        {
+          "id": "effective_date",
+          "label": "Effective Date",
+          "value": "2026-03-02",
+          "value_text": "March 2, 2026",
+          "quote": {
+            "doc": "nda-kestrel",
+            "text": "Effective Date March 2, 2026",
+            "section": "Cover Page"
+          }
+        },
+        {
+          "id": "mnda_term",
+          "label": "MNDA Term",
+          "value": "P1Y",
+          "value_text": "1 year",
+          "quote": {
+            "doc": "nda-kestrel",
+            "text": "Expires 1 year from Effective Date.",
+            "section": "Cover Page"
+          }
+        },
+        {
+          "id": "confidentiality_term",
+          "label": "Term of Confidentiality",
+          "value": "P2Y",
+          "value_text": "2 years",
+          "quote": {
+            "doc": "nda-kestrel",
+            "text": "2 years from Effective Date, but in the case of trade secrets until Confidential Information is no longer considered a trade secret under applicable laws.",
+            "section": "Cover Page"
+          }
+        }
+      ]
+    },
+    {
+      "id": "order-larkspur",
+      "title": "Larkspur Observability subscription",
+      "counterparty": "Larkspur Analytics, Inc.",
+      "type": "Cloud Service Order Form",
+      "docs": [
+        "order-larkspur",
+        "csa-standard-terms-v3"
+      ],
+      "key_terms": [
+        {
+          "id": "order_date",
+          "label": "Order Date",
+          "value": "2026-01-05",
+          "value_text": "January 5, 2026",
+          "quote": {
+            "doc": "order-larkspur",
+            "text": "**Order Date:** January 5, 2026"
+          }
+        },
+        {
+          "id": "subscription_period",
+          "label": "Subscription Period",
+          "value": "P12M",
+          "value_text": "12 months",
+          "quote": {
+            "doc": "order-larkspur",
+            "text": "**Subscription Period:** 12 months from the Order Date."
+          }
+        },
+        {
+          "id": "non_renewal_notice",
+          "label": "Non-Renewal Notice Date",
+          "value": "P30D",
+          "value_text": "30 days",
+          "quote": {
+            "doc": "order-larkspur",
+            "text": "**Non-Renewal Notice Date:** At least 30 days before the end of the current Subscription Period."
+          }
+        },
+        {
+          "id": "payment_period",
+          "label": "Payment Period",
+          "value": "P30D",
+          "value_text": "30 days",
+          "quote": {
+            "doc": "order-larkspur",
+            "text": "**Payment Period:** Customer will pay each invoice within 30 days of the invoice date."
+          }
+        },
+        {
+          "id": "fees",
+          "label": "Fees",
+          "value": "USD 48000 per Subscription Period",
+          "value_text": "$48,000",
+          "quote": {
+            "doc": "order-larkspur",
+            "text": "**Fees:** $48,000 per Subscription Period, invoiced annually in advance on the Order Date."
+          }
+        }
+      ]
+    },
+    {
+      "id": "order-tamarind",
+      "title": "Tamarind Cold Archive subscription",
+      "counterparty": "Tamarind Storage, Inc.",
+      "type": "Cloud Service Order Form",
+      "docs": [
+        "order-tamarind",
+        "csa-standard-terms-v3"
+      ],
+      "key_terms": [
+        {
+          "id": "order_date",
+          "label": "Order Date",
+          "value": "2025-12-15",
+          "value_text": "December 15, 2025",
+          "quote": {
+            "doc": "order-tamarind",
+            "text": "**Order Date:** December 15, 2025"
+          }
+        },
+        {
+          "id": "subscription_period",
+          "label": "Subscription Period",
+          "value": "P12M",
+          "value_text": "12 months",
+          "quote": {
+            "doc": "order-tamarind",
+            "text": "**Subscription Period:** 12 months from the Order Date."
+          }
+        },
+        {
+          "id": "non_renewal_notice",
+          "label": "Non-Renewal Notice Date",
+          "value": "P60D",
+          "value_text": "60 days",
+          "quote": {
+            "doc": "order-tamarind",
+            "text": "**Non-Renewal Notice Date:** At least 60 days before the end of the current Subscription Period."
+          }
+        },
+        {
+          "id": "payment_period",
+          "label": "Payment Period",
+          "value": "P45D",
+          "value_text": "45 days",
+          "quote": {
+            "doc": "order-tamarind",
+            "text": "**Payment Period:** Customer will pay each invoice within 45 days of the invoice date."
+          }
+        },
+        {
+          "id": "fees",
+          "label": "Fees",
+          "value": "USD 3500 per month",
+          "value_text": "$3,500 per month",
+          "quote": {
+            "doc": "order-tamarind",
+            "text": "**Fees:** $3,500 per month for up to 2 PB stored, invoiced monthly in arrears on the last day of each month."
+          }
+        }
+      ]
+    }
+  ],
+  "obligations": [
+    {
+      "id": "nda-kestrel/mnda-expires",
+      "agreement": "nda-kestrel",
+      "title": "MNDA expires",
+      "owner": "Both parties",
+      "category": "Term",
+      "kind": "dated",
+      "rule": {
+        "type": "anchor_plus",
+        "anchor": "effective_date",
+        "offset": "mnda_term"
+      },
+      "interpretation": "Expiry is the anniversary of the Effective Date.",
+      "action": "Decide whether to sign a new MNDA before sharing anything further with Kestrel.",
+      "alert_days": 30,
+      "quotes": [
+        {
+          "doc": "nda-kestrel",
+          "text": "Expires 1 year from Effective Date.",
+          "section": "Cover Page"
+        },
+        {
+          "doc": "mnda-standard-terms-v1",
+          "text": "This MNDA commences on the Effective Date and expires at the end of the MNDA Term.",
+          "section": "5. Term and Termination"
+        }
+      ],
+      "occurrences": [
+        {
+          "date": "2027-03-02",
+          "label": "Effective Date + 1 year"
+        }
+      ],
+      "rule_terms": [
+        "effective_date",
+        "mnda_term"
+      ]
+    },
+    {
+      "id": "nda-kestrel/confidentiality-ends",
+      "agreement": "nda-kestrel",
+      "title": "Confidentiality obligations end (except trade secrets)",
+      "owner": "Both parties, as Receiving Party",
+      "category": "Confidentiality",
+      "kind": "dated",
+      "rule": {
+        "type": "anchor_plus",
+        "anchor": "effective_date",
+        "offset": "confidentiality_term"
+      },
+      "interpretation": "Ends on the second anniversary of the Effective Date. Trade secrets stay protected after this date, so the end date does not apply to them.",
+      "action": "Do not treat Kestrel trade secrets as free to use after this date.",
+      "alert_days": 30,
+      "quotes": [
+        {
+          "doc": "nda-kestrel",
+          "text": "2 years from Effective Date, but in the case of trade secrets until Confidential Information is no longer considered a trade secret under applicable laws.",
+          "section": "Cover Page"
+        },
+        {
+          "doc": "mnda-standard-terms-v1",
+          "text": "The Receiving Party’s obligations relating to Confidential Information will survive for the Term of Confidentiality, despite any expiration or termination of this MNDA.",
+          "section": "5. Term and Termination"
+        }
+      ],
+      "occurrences": [
+        {
+          "date": "2028-03-02",
+          "label": "Effective Date + 2 years"
+        }
+      ],
+      "rule_terms": [
+        "confidentiality_term",
+        "effective_date"
+      ]
+    },
+    {
+      "id": "nda-kestrel/return-or-destroy",
+      "agreement": "nda-kestrel",
+      "title": "Return or destroy Kestrel's Confidential Information on request",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Confidentiality",
+      "kind": "event",
+      "event": "MNDA expires or is terminated, or Kestrel asks earlier",
+      "related": "nda-kestrel/mnda-expires",
+      "action": "Stop using Kestrel's Confidential Information. After a written request, destroy or return it promptly and confirm in writing if asked.",
+      "quotes": [
+        {
+          "doc": "mnda-standard-terms-v1",
+          "text": "Upon expiration or termination of this MNDA or upon the Disclosing Party’s earlier request, the Receiving Party will: (a) cease using Confidential Information; (b) promptly after the Disclosing Party’s written request, destroy all Confidential Information in the Receiving Party’s possession or control or return it to the Disclosing Party; and (c) if requested by the Disclosing Party, confirm its compliance with these obligations in writing.",
+          "section": "6. Return or Destruction of Confidential Information"
+        }
+      ]
+    },
+    {
+      "id": "nda-kestrel/compelled-disclosure",
+      "agreement": "nda-kestrel",
+      "title": "Give advance notice before a legally required disclosure",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Notice",
+      "kind": "event",
+      "event": "A law, regulator, subpoena or court order requires disclosure of Kestrel's Confidential Information",
+      "action": "Tell Kestrel before disclosing, where the law allows, and cooperate with its request for confidential treatment.",
+      "quotes": [
+        {
+          "doc": "mnda-standard-terms-v1",
+          "text": "provided (to the extent legally permitted) it provides the Disclosing Party reasonable advance notice of the required disclosure",
+          "section": "4. Disclosures Required by Law"
+        }
+      ]
+    },
+    {
+      "id": "order-larkspur/non-renewal-notice",
+      "agreement": "order-larkspur",
+      "title": "Last day to send a non-renewal notice",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Renewal",
+      "kind": "dated",
+      "rule": {
+        "type": "renewal_notice",
+        "anchor": "order_date",
+        "period": "subscription_period",
+        "notice": "non_renewal_notice",
+        "cycles": 3
+      },
+      "interpretation": "The Subscription Period ends on each anniversary of the Order Date. 'At least 30 days before' is counted in calendar days, so the last safe day is 30 days before that anniversary. If no notice is sent, the order renews for another 12 months.",
+      "action": "Decide whether to keep Larkspur. To cancel, send written notice to legal@larkspur.example by this date.",
+      "alert_days": 45,
+      "quotes": [
+        {
+          "doc": "order-larkspur",
+          "text": "**Non-Renewal Notice Date:** At least 30 days before the end of the current Subscription Period."
+        },
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "For each Order Form, the Agreement will start on the Order Date, continue through the Subscription Period, and automatically renew for additional Subscription Periods unless one party gives notice of non-renewal to the other party before the Non-Renewal Notice Date.",
+          "section": "5.1 Order Form and Agreement"
+        }
+      ],
+      "occurrences": [
+        {
+          "date": "2026-12-06",
+          "label": "Term 1 ends 2027-01-05; otherwise renews to 2028-01-05"
+        },
+        {
+          "date": "2027-12-06",
+          "label": "Term 2 ends 2028-01-05; otherwise renews to 2029-01-05"
+        },
+        {
+          "date": "2028-12-06",
+          "label": "Term 3 ends 2029-01-05; otherwise renews to 2030-01-05"
+        }
+      ],
+      "rule_terms": [
+        "non_renewal_notice",
+        "order_date",
+        "subscription_period"
+      ]
+    },
+    {
+      "id": "order-larkspur/annual-invoice",
+      "agreement": "order-larkspur",
+      "title": "Annual invoice due ($48,000)",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Payment",
+      "kind": "dated",
+      "rule": {
+        "type": "invoice_due",
+        "anchor": "order_date",
+        "schedule": "annual_on_anchor",
+        "payment": "payment_period",
+        "cycles": 3
+      },
+      "interpretation": "Assumes each renewal invoice is dated on the anniversary of the Order Date. Due date is the invoice date plus 30 calendar days.",
+      "action": "Confirm the invoice amount matches the Order Form, then pay by this date.",
+      "alert_days": 14,
+      "quotes": [
+        {
+          "doc": "order-larkspur",
+          "text": "**Fees:** $48,000 per Subscription Period, invoiced annually in advance on the Order Date."
+        },
+        {
+          "doc": "order-larkspur",
+          "text": "**Payment Period:** Customer will pay each invoice within 30 days of the invoice date."
+        }
+      ],
+      "occurrences": [
+        {
+          "date": "2026-02-04",
+          "label": "Invoice dated 2026-01-05"
+        },
+        {
+          "date": "2027-02-04",
+          "label": "Invoice dated 2027-01-05"
+        },
+        {
+          "date": "2028-02-04",
+          "label": "Invoice dated 2028-01-05"
+        }
+      ],
+      "rule_terms": [
+        "order_date",
+        "payment_period"
+      ]
+    },
+    {
+      "id": "order-larkspur/payment-dispute",
+      "agreement": "order-larkspur",
+      "title": "Raise any fee dispute before payment is due",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Payment",
+      "kind": "event",
+      "event": "An invoice looks wrong",
+      "related": "order-larkspur/annual-invoice",
+      "action": "Notify Larkspur before the invoice due date and pay the undisputed amount on time.",
+      "quotes": [
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "If Customer has a good-faith disagreement about the Fees charged or invoiced, Customer must notify Provider about the dispute before payment is due, or within 30 days of an automatic payment, and must pay all undisputed amounts on time.",
+          "section": "4.4 Payment Dispute"
+        }
+      ]
+    },
+    {
+      "id": "order-larkspur/warranty-notice",
+      "agreement": "order-larkspur",
+      "title": "Report a loss of functionality within 45 days",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Notice",
+      "kind": "event",
+      "event": "Larkspur materially reduces the service's general functionality",
+      "action": "Send notice with enough detail to replicate the issue within 45 days of discovering it.",
+      "quotes": [
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "Customer must give Provider notice (with enough detail for Provider to understand or replicate the issue) within 45 days of discovering the issue.",
+          "section": "6.4 Provider Warranty Remedy"
+        }
+      ]
+    },
+    {
+      "id": "order-larkspur/content-deletion",
+      "agreement": "order-larkspur",
+      "title": "Request deletion of our data at exit",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Data",
+      "kind": "event",
+      "event": "The order ends or is terminated",
+      "action": "Ask Larkspur in writing to delete Customer Content. Larkspur must delete it within 60 days of the request.",
+      "quotes": [
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "Upon Customer’s request, Provider will delete Customer Content within 60 days.",
+          "section": "5.5(b) Effect of Termination"
+        }
+      ]
+    },
+    {
+      "id": "order-tamarind/non-renewal-notice",
+      "agreement": "order-tamarind",
+      "title": "Last day to send a non-renewal notice",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Renewal",
+      "kind": "dated",
+      "rule": {
+        "type": "renewal_notice",
+        "anchor": "order_date",
+        "period": "subscription_period",
+        "notice": "non_renewal_notice",
+        "cycles": 3
+      },
+      "interpretation": "The Subscription Period ends on each anniversary of the Order Date. 'At least 60 days before' is counted in calendar days. If no notice is sent, the order renews for another 12 months.",
+      "action": "Decide whether to keep Tamarind. To cancel, send written notice to notices@tamarind.example by this date.",
+      "alert_days": 45,
+      "quotes": [
+        {
+          "doc": "order-tamarind",
+          "text": "**Non-Renewal Notice Date:** At least 60 days before the end of the current Subscription Period."
+        },
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "For each Order Form, the Agreement will start on the Order Date, continue through the Subscription Period, and automatically renew for additional Subscription Periods unless one party gives notice of non-renewal to the other party before the Non-Renewal Notice Date.",
+          "section": "5.1 Order Form and Agreement"
+        }
+      ],
+      "occurrences": [
+        {
+          "date": "2026-10-16",
+          "label": "Term 1 ends 2026-12-15; otherwise renews to 2027-12-15"
+        },
+        {
+          "date": "2027-10-16",
+          "label": "Term 2 ends 2027-12-15; otherwise renews to 2028-12-15"
+        },
+        {
+          "date": "2028-10-16",
+          "label": "Term 3 ends 2028-12-15; otherwise renews to 2029-12-15"
+        }
+      ],
+      "rule_terms": [
+        "non_renewal_notice",
+        "order_date",
+        "subscription_period"
+      ]
+    },
+    {
+      "id": "order-tamarind/monthly-invoice",
+      "agreement": "order-tamarind",
+      "title": "Monthly invoice due ($3,500)",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Payment",
+      "kind": "dated",
+      "rule": {
+        "type": "invoice_due",
+        "anchor": "order_date",
+        "schedule": "monthly_last_day",
+        "payment": "payment_period",
+        "cycles": 3
+      },
+      "interpretation": "Invoices are dated the last day of each month, starting with the month of the Order Date. Due date is the invoice date plus 45 calendar days.",
+      "action": "Check stored volume is under 2 PB and the amount is $3,500, then pay by this date.",
+      "alert_days": 7,
+      "quotes": [
+        {
+          "doc": "order-tamarind",
+          "text": "**Fees:** $3,500 per month for up to 2 PB stored, invoiced monthly in arrears on the last day of each month."
+        },
+        {
+          "doc": "order-tamarind",
+          "text": "**Payment Period:** Customer will pay each invoice within 45 days of the invoice date."
+        }
+      ],
+      "occurrences": [
+        {
+          "date": "2026-02-14",
+          "label": "Invoice dated 2025-12-31"
+        },
+        {
+          "date": "2026-03-17",
+          "label": "Invoice dated 2026-01-31"
+        },
+        {
+          "date": "2026-04-14",
+          "label": "Invoice dated 2026-02-28"
+        },
+        {
+          "date": "2026-05-15",
+          "label": "Invoice dated 2026-03-31"
+        },
+        {
+          "date": "2026-06-14",
+          "label": "Invoice dated 2026-04-30"
+        },
+        {
+          "date": "2026-07-15",
+          "label": "Invoice dated 2026-05-31"
+        },
+        {
+          "date": "2026-08-14",
+          "label": "Invoice dated 2026-06-30"
+        },
+        {
+          "date": "2026-09-14",
+          "label": "Invoice dated 2026-07-31"
+        },
+        {
+          "date": "2026-10-15",
+          "label": "Invoice dated 2026-08-31"
+        },
+        {
+          "date": "2026-11-14",
+          "label": "Invoice dated 2026-09-30"
+        },
+        {
+          "date": "2026-12-15",
+          "label": "Invoice dated 2026-10-31"
+        },
+        {
+          "date": "2027-01-14",
+          "label": "Invoice dated 2026-11-30"
+        },
+        {
+          "date": "2027-02-14",
+          "label": "Invoice dated 2026-12-31"
+        },
+        {
+          "date": "2027-03-17",
+          "label": "Invoice dated 2027-01-31"
+        },
+        {
+          "date": "2027-04-14",
+          "label": "Invoice dated 2027-02-28"
+        },
+        {
+          "date": "2027-05-15",
+          "label": "Invoice dated 2027-03-31"
+        },
+        {
+          "date": "2027-06-14",
+          "label": "Invoice dated 2027-04-30"
+        },
+        {
+          "date": "2027-07-15",
+          "label": "Invoice dated 2027-05-31"
+        },
+        {
+          "date": "2027-08-14",
+          "label": "Invoice dated 2027-06-30"
+        },
+        {
+          "date": "2027-09-14",
+          "label": "Invoice dated 2027-07-31"
+        },
+        {
+          "date": "2027-10-15",
+          "label": "Invoice dated 2027-08-31"
+        },
+        {
+          "date": "2027-11-14",
+          "label": "Invoice dated 2027-09-30"
+        },
+        {
+          "date": "2027-12-15",
+          "label": "Invoice dated 2027-10-31"
+        },
+        {
+          "date": "2028-01-14",
+          "label": "Invoice dated 2027-11-30"
+        },
+        {
+          "date": "2028-02-14",
+          "label": "Invoice dated 2027-12-31"
+        },
+        {
+          "date": "2028-03-16",
+          "label": "Invoice dated 2028-01-31"
+        },
+        {
+          "date": "2028-04-14",
+          "label": "Invoice dated 2028-02-29"
+        },
+        {
+          "date": "2028-05-15",
+          "label": "Invoice dated 2028-03-31"
+        },
+        {
+          "date": "2028-06-14",
+          "label": "Invoice dated 2028-04-30"
+        },
+        {
+          "date": "2028-07-15",
+          "label": "Invoice dated 2028-05-31"
+        },
+        {
+          "date": "2028-08-14",
+          "label": "Invoice dated 2028-06-30"
+        },
+        {
+          "date": "2028-09-14",
+          "label": "Invoice dated 2028-07-31"
+        },
+        {
+          "date": "2028-10-15",
+          "label": "Invoice dated 2028-08-31"
+        },
+        {
+          "date": "2028-11-14",
+          "label": "Invoice dated 2028-09-30"
+        },
+        {
+          "date": "2028-12-15",
+          "label": "Invoice dated 2028-10-31"
+        },
+        {
+          "date": "2029-01-14",
+          "label": "Invoice dated 2028-11-30"
+        }
+      ],
+      "rule_terms": [
+        "order_date",
+        "payment_period"
+      ]
+    },
+    {
+      "id": "order-tamarind/suspension-risk",
+      "agreement": "order-tamarind",
+      "title": "Service can be suspended if a balance is over 30 days overdue",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Payment",
+      "kind": "event",
+      "event": "An undisputed invoice is more than 30 days past due",
+      "related": "order-tamarind/monthly-invoice",
+      "action": "Escalate any unpaid Tamarind invoice before it is 30 days late. Suspension would cut access to archived datasets.",
+      "quotes": [
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "If Customer (a) has an outstanding, undisputed balance on its account for more than 30 days; (b) breaches Section 2.1 (Restrictions on Customer); or (c) uses the Product in violation of the Agreement or in a way that materially and negatively impacts the Product or others, then Provider may temporarily suspend Customer’s access to the Product with or without notice.",
+          "section": "2.2 Suspension"
+        }
+      ]
+    },
+    {
+      "id": "order-tamarind/content-deletion",
+      "agreement": "order-tamarind",
+      "title": "Request deletion of archived datasets at exit, with written confirmation",
+      "owner": "Northbeam Labs, Inc.",
+      "category": "Data",
+      "kind": "event",
+      "event": "The order ends or is terminated",
+      "action": "Ask Tamarind in writing to delete Customer Content and to confirm deletion in writing. The Standard Terms give Tamarind 60 days.",
+      "quotes": [
+        {
+          "doc": "order-tamarind",
+          "text": "**Customer Content Deletion:** On request after termination, Provider will delete Customer Content and confirm deletion in writing."
+        },
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "Upon Customer’s request, Provider will delete Customer Content within 60 days.",
+          "section": "5.5(b) Effect of Termination"
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "quotes_found_word_for_word": 33,
+    "dated_obligations_computed": 6,
+    "event_obligations": 7
+  }
+}

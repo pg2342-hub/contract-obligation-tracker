@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contract Obligation Tracker</title>
+  <meta name="description" content="Extracts obligations, deadlines and renewal or notice dates from contracts. A person verifies every field against the source clause before it can trigger an alert.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="title-row">
+        <div>
+          <h1>Contract Obligation Tracker</h1>
+          <p class="sub">A model extracts each obligation and the clause it comes from. Code computes the dates. A person checks every field before anything reaches the deadline calendar.</p>
+        </div>
+        <div class="asof">
+          <label for="today">As of</label>
+          <input type="date" id="today">
+        </div>
+      </div>
+      <p class="banner">Demo on sample agreements with fictional parties, built on Common Paper templates (CC BY 4.0). Review choices are saved only in this browser. Not legal advice.</p>
+      <div class="stats" id="stats"></div>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="review" aria-selected="true">Review queue</button>
+        <button role="tab" data-tab="deadlines" aria-selected="false">Deadlines</button>
+        <button role="tab" data-tab="agreements" aria-selected="false">Agreements</button>
+        <button role="tab" data-tab="how" aria-selected="false">How it works</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="tab-review" class="tab"></section>
+    <section id="tab-deadlines" class="tab" hidden></section>
+    <section id="tab-agreements" class="tab" hidden></section>
+    <section id="tab-how" class="tab" hidden>
+      <div class="prose">
+        <h2>How it works</h2>
+        <ol>
+          <li><strong>Extract.</strong> <code>tools/extract.py</code> sends an agreement to Claude, which returns key terms (dates, terms, notice periods) and obligations as structured data. Each item carries the exact clause it relies on. The model never computes a date; it describes a rule, such as "30 days before each anniversary of the Order Date."</li>
+          <li><strong>Check automatically.</strong> <code>tools/build_schedule.py</code> confirms that every quoted clause appears word for word in the source document and that every key term's value matches its own quote, for example that "January 5, 2026" really is 2026-01-05. Then it computes each deadline from the rule. Any failure stops the build, and CI runs this check on every push.</li>
+          <li><strong>Verify by hand.</strong> Every obligation starts as unverified. A reviewer opens the source clause, confirms the owner, the date rule and its reading of the contract, and the action, then signs off. A wrong item is rejected with a reason.</li>
+          <li><strong>Alert only on verified items.</strong> The deadline calendar, the alerts and the calendar export include verified obligations only. An unverified deadline is counted but never shown as reliable.</li>
+        </ol>
+        <h3>Why a person checks every field</h3>
+        <p>A missed renewal or notice date usually costs a full contract year. Sampling a share of extractions would be faster, but a single miss is the failure that matters, so this design checks 100% of fields and uses automation to make each check quick: the clause is one click away and highlighted.</p>
+        <h3>Date conventions</h3>
+        <p>Periods end on the anniversary of their start date. "At least N days before" is counted in calendar days. Each dated obligation states its reading of the contract in plain words, and the reviewer confirms that reading as part of the date check.</p>
+      </div>
+    </section>
+  </main>
+
+  <aside id="source" class="source" hidden aria-label="Source document">
+    <div class="source-head">
+      <div>
+        <div class="source-kicker">Source</div>
+        <div id="source-title" class="source-title"></div>
+      </div>
+      <button id="source-close" class="btn ghost" aria-label="Close source">Close</button>
+    </div>
+    <div id="source-body" class="source-body"></div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
