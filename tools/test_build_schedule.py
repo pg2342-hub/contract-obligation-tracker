@@ -37,9 +37,9 @@ class Schedule(unittest.TestCase):
     def test_sample_builds_and_dates(self):
         s = build_with(lambda d: None)
         larkspur = obligation(s, "order-larkspur/non-renewal-notice")
-        self.assertEqual(larkspur["occurrences"][0]["date"], "2026-12-06")  # 30 days before 2027-01-05
+        self.assertEqual(larkspur["occurrences"][0]["date"], "2026-12-04")  # term ends 2027-01-04; notice date 2026-12-05; before it
         tamarind = obligation(s, "order-tamarind/non-renewal-notice")
-        self.assertEqual(tamarind["occurrences"][0]["date"], "2026-10-16")  # 60 days before 2026-12-15
+        self.assertEqual(tamarind["occurrences"][0]["date"], "2026-10-14")  # term ends 2026-12-14; notice date 2026-10-15; before it
         self.assertEqual(obligation(s, "nda-kestrel/mnda-expires")["occurrences"][0]["date"], "2027-03-02")
 
     def test_altered_quote_fails(self):
@@ -57,6 +57,12 @@ class Schedule(unittest.TestCase):
     def test_duration_that_does_not_match_its_quote_fails(self):
         def m(d):
             d["agreements"][1]["key_terms"][2]["value"] = "P31D"
+        with self.assertRaises(bs.CheckFailed):
+            build_with(m)
+
+    def test_key_term_quote_from_another_agreement_fails(self):
+        def m(d):
+            d["agreements"][0]["key_terms"][0]["quote"]["doc"] = "order-larkspur"
         with self.assertRaises(bs.CheckFailed):
             build_with(m)
 

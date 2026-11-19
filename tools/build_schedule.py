@@ -133,10 +133,18 @@ def occurrences(rule: dict, terms: dict[str, dict]) -> list[dict]:
         period, notice = term(rule["period"]), days_of(term(rule["notice"]))
         out = []
         for k in range(1, rule["cycles"] + 1):
-            end = add_duration(start, period, k)
+            # Conservative reading, used for every notice deadline:
+            #   the term's last day is the day before the anniversary,
+            #   the Non-Renewal Notice Date is N days before that last day,
+            #   notice must arrive *before* that date, so the last safe day is one day earlier.
+            last_day = add_duration(start, period, k) - timedelta(days=1)
+            notice_date = last_day - timedelta(days=notice)
+            last_safe = notice_date - timedelta(days=1)
+            next_last = add_duration(start, period, k + 1) - timedelta(days=1)
             out.append({
-                "date": (end - timedelta(days=notice)).isoformat(),
-                "label": f"Term {k} ends {end.isoformat()}; otherwise renews to {add_duration(start, period, k + 1).isoformat()}",
+                "date": last_safe.isoformat(),
+                "label": (f"Term {k} runs through {last_day.isoformat()}; Non-Renewal Notice Date "
+                          f"{notice_date.isoformat()}; otherwise renews through {next_last.isoformat()}"),
             })
         return out
 
@@ -176,6 +184,8 @@ def build(data: dict | None = None) -> dict:
             if d not in docs:
                 raise CheckFailed(f"{a['id']}: unknown document {d!r}")
         for t in a["key_terms"]:
+            if t["quote"]["doc"] not in a["docs"]:
+                raise CheckFailed(f"{a['id']}/{t['id']}: quote from {t['quote']['doc']}, which is not part of {a['id']}")
             check_key_term(t, docs, f"{a['id']}/{t['id']}")
             quotes_checked += 1
 

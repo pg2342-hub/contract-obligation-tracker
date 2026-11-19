@@ -297,9 +297,9 @@
         "notice": "non_renewal_notice",
         "cycles": 3
       },
-      "interpretation": "The Subscription Period ends on each anniversary of the Order Date. 'At least 30 days before' is counted in calendar days, so the last safe day is 30 days before that anniversary. If no notice is sent, the order renews for another 12 months.",
-      "action": "Decide whether to keep Larkspur. To cancel, send written notice to legal@larkspur.example by this date.",
-      "alert_days": 45,
+      "interpretation": "Read conservatively. A 12-month term from the Order Date runs through the day before the anniversary. The Non-Renewal Notice Date is 30 days before that last day, and notice must arrive before that date, so the date shown is the last safe day for notice to be delivered. If no notice is sent, the order renews for another 12 months.",
+      "action": "Decide whether to keep the service. To cancel, send written notice to legal@larkspur.example so that delivery is confirmed by this date; email notice counts only on confirmed delivery (section 12.9).",
+      "alert_days": 30,
       "quotes": [
         {
           "doc": "order-larkspur",
@@ -309,20 +309,25 @@
           "doc": "csa-standard-terms-v3",
           "text": "For each Order Form, the Agreement will start on the Order Date, continue through the Subscription Period, and automatically renew for additional Subscription Periods unless one party gives notice of non-renewal to the other party before the Non-Renewal Notice Date.",
           "section": "5.1 Order Form and Agreement"
+        },
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "Notices will be deemed given (a) upon confirmed delivery if by email, registered or certified mail, or personal delivery; or (b) two days after mailing if by overnight commercial delivery.",
+          "section": "12.9 Notices"
         }
       ],
       "occurrences": [
         {
-          "date": "2026-12-06",
-          "label": "Term 1 ends 2027-01-05; otherwise renews to 2028-01-05"
+          "date": "2026-12-04",
+          "label": "Term 1 runs through 2027-01-04; Non-Renewal Notice Date 2026-12-05; otherwise renews through 2028-01-04"
         },
         {
-          "date": "2027-12-06",
-          "label": "Term 2 ends 2028-01-05; otherwise renews to 2029-01-05"
+          "date": "2027-12-04",
+          "label": "Term 2 runs through 2028-01-04; Non-Renewal Notice Date 2027-12-05; otherwise renews through 2029-01-04"
         },
         {
-          "date": "2028-12-06",
-          "label": "Term 3 ends 2029-01-05; otherwise renews to 2030-01-05"
+          "date": "2028-12-04",
+          "label": "Term 3 runs through 2029-01-04; Non-Renewal Notice Date 2028-12-05; otherwise renews through 2030-01-04"
         }
       ],
       "rule_terms": [
@@ -443,9 +448,9 @@
         "notice": "non_renewal_notice",
         "cycles": 3
       },
-      "interpretation": "The Subscription Period ends on each anniversary of the Order Date. 'At least 60 days before' is counted in calendar days. If no notice is sent, the order renews for another 12 months.",
-      "action": "Decide whether to keep Tamarind. To cancel, send written notice to notices@tamarind.example by this date.",
-      "alert_days": 45,
+      "interpretation": "Read conservatively. A 12-month term from the Order Date runs through the day before the anniversary. The Non-Renewal Notice Date is 60 days before that last day, and notice must arrive before that date, so the date shown is the last safe day for notice to be delivered. If no notice is sent, the order renews for another 12 months.",
+      "action": "Decide whether to keep the service. To cancel, send written notice to notices@tamarind.example so that delivery is confirmed by this date; email notice counts only on confirmed delivery (section 12.9).",
+      "alert_days": 30,
       "quotes": [
         {
           "doc": "order-tamarind",
@@ -455,20 +460,25 @@
           "doc": "csa-standard-terms-v3",
           "text": "For each Order Form, the Agreement will start on the Order Date, continue through the Subscription Period, and automatically renew for additional Subscription Periods unless one party gives notice of non-renewal to the other party before the Non-Renewal Notice Date.",
           "section": "5.1 Order Form and Agreement"
+        },
+        {
+          "doc": "csa-standard-terms-v3",
+          "text": "Notices will be deemed given (a) upon confirmed delivery if by email, registered or certified mail, or personal delivery; or (b) two days after mailing if by overnight commercial delivery.",
+          "section": "12.9 Notices"
         }
       ],
       "occurrences": [
         {
-          "date": "2026-10-16",
-          "label": "Term 1 ends 2026-12-15; otherwise renews to 2027-12-15"
+          "date": "2026-10-14",
+          "label": "Term 1 runs through 2026-12-14; Non-Renewal Notice Date 2026-10-15; otherwise renews through 2027-12-14"
         },
         {
-          "date": "2027-10-16",
-          "label": "Term 2 ends 2027-12-15; otherwise renews to 2028-12-15"
+          "date": "2027-10-14",
+          "label": "Term 2 runs through 2027-12-14; Non-Renewal Notice Date 2027-10-15; otherwise renews through 2028-12-14"
         },
         {
-          "date": "2028-10-16",
-          "label": "Term 3 ends 2028-12-15; otherwise renews to 2029-12-15"
+          "date": "2028-10-14",
+          "label": "Term 3 runs through 2028-12-14; Non-Renewal Notice Date 2028-10-15; otherwise renews through 2029-12-14"
         }
       ],
       "rule_terms": [
@@ -696,7 +706,7 @@
     }
   ],
   "checks": {
-    "quotes_found_word_for_word": 33,
+    "quotes_found_word_for_word": 35,
     "dated_obligations_computed": 6,
     "event_obligations": 7
   }
