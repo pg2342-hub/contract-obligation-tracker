@@ -6,7 +6,7 @@ Extracts obligations, deadlines and renewal or notice dates from contracts into 
 
 ## Why it is built this way
 
-A missed non-renewal date usually costs a full contract year, and one missed obligation is the failure that matters. So the design aims for zero misses rather than maximum automation:
+A missed non-renewal date can cost a full contract year, and one missed obligation is the failure that matters. So the design aims for zero misses rather than maximum automation:
 
 1. **The model extracts, it never computes.** Claude returns key terms (dates, terms, notice periods) and obligations as structured data, with the exact clause each one relies on. Deadlines are described as rules, such as "30 days before each anniversary of the Order Date."
 2. **Code checks the extraction and computes the dates.** `tools/build_schedule.py` fails the build if any quote is not found word for word in its source document, if a key term's value does not match its own quote ("January 5, 2026" must be 2026-01-05), or if a quote (for a key term or an obligation) comes from a document outside its agreement. It then computes every deadline with fixed, documented rules. CI runs this on every push.
