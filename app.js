@@ -232,7 +232,7 @@ function obligationCard(o, a) {
     h("div", { class: "from" },
       h("span", {}, `${docTitle(q.doc)}${q.section ? ` · ${q.section}` : ""}`),
       h("span", {},
-        h("span", { class: "auto" }, "✓ found word for word"), " · ",
+        h("span", { class: "auto" }, "found word for word"), " · ",
         h("button", { class: "link", onclick: () => openSource(q.doc, q.text) }, "Open in source")))));
 
   let whenNodes;
