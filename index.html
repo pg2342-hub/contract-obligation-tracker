@@ -12,60 +12,81 @@
 <body>
 <!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/contract-obligation-tracker">Code on GitHub</a></header><!-- /demo-chrome -->
 
-  <header class="top">
-    <div class="wrap">
-      <div class="title-row">
-        <div>
-          <h1>Contract Obligation Tracker</h1>
-          <p class="sub">A model extracts each obligation and the clause it comes from. Code computes the dates. A person checks every field before anything reaches the deadline calendar.</p>
-        </div>
-        <div class="asof">
-          <label for="today">As of</label>
-          <input type="date" id="today">
-        </div>
-      </div>
-      <p class="banner">Demo on sample agreements with fictional parties, built on Common Paper templates (CC BY 4.0). Review choices are saved only in this browser. Not legal advice.</p>
-      <div class="stats" id="stats"></div>
-      <nav class="tabs" role="tablist">
+<main>
+  <div class="head">
+    <h1>Contract Obligation Tracker</h1>
+    <p class="lead">A model extracts each obligation and the clause it comes from. Code computes the dates. A person checks every field against the source before anything reaches the deadline calendar.</p>
+  </div>
+
+  <section class="desk" id="tool" aria-label="Obligation tracker">
+    <div class="deskbar">
+      <nav class="seg" role="tablist" aria-label="View">
         <button role="tab" data-tab="review" aria-selected="true">Review queue</button>
         <button role="tab" data-tab="deadlines" aria-selected="false">Deadlines</button>
         <button role="tab" data-tab="agreements" aria-selected="false">Agreements</button>
-        <button role="tab" data-tab="how" aria-selected="false">How it works</button>
       </nav>
+      <div class="asof">
+        <label for="today">As of</label>
+        <input type="date" id="today">
+      </div>
     </div>
-  </header>
+    <div class="stats" id="stats"></div>
+    <div class="panes">
+      <div class="work">
+        <section id="tab-review" class="tab"></section>
+        <section id="tab-deadlines" class="tab" hidden></section>
+        <section id="tab-agreements" class="tab" hidden></section>
+      </div>
+      <aside id="source" class="source" aria-label="Source document">
+        <div class="source-head">
+          <div id="source-title" class="source-title">Source document</div>
+          <button id="source-close" class="btn ghost" aria-label="Close source">Close</button>
+        </div>
+        <div id="source-body" class="source-body"><p class="source-empty">Each quoted clause has an “Open in source” link. The full agreement opens here with the clause highlighted.</p></div>
+      </aside>
+    </div>
+  </section>
 
-  <main class="wrap">
-    <section id="tab-review" class="tab"></section>
-    <section id="tab-deadlines" class="tab" hidden></section>
-    <section id="tab-agreements" class="tab" hidden></section>
-    <section id="tab-how" class="tab" hidden>
-      <div class="prose">
+  <div class="layout">
+    <div class="content">
+      <section id="ahead">
+        <h2>Deadlines ahead</h2>
+        <p class="note">Every dated obligation over the next 12 months from the as-of date. Only verified items alert; the band before each date is its alert window. This updates as you verify or reject items above.</p>
+        <div class="chart" id="timeline"></div>
+      </section>
+
+      <section id="how">
         <h2>How it works</h2>
-        <ol>
-          <li><strong>Extract.</strong> <code>tools/extract.py</code> sends an agreement to Claude, which returns key terms (dates, terms, notice periods) and obligations as structured data. Each item carries the exact clause it relies on. The model never computes a date; it describes a rule, such as "30 days before each anniversary of the Order Date."</li>
-          <li><strong>Check automatically.</strong> <code>tools/build_schedule.py</code> confirms that every quoted clause appears word for word in the source document and that every key term's value matches its own quote, for example that "January 5, 2026" really is 2026-01-05. Then it computes each deadline from the rule. Any failure stops the build, and CI runs this check on every push.</li>
-          <li><strong>Verify by hand.</strong> Every obligation starts as unverified. A reviewer opens the source clause, confirms the owner, the date rule and its reading of the contract, and the action, then signs off. A wrong item is rejected with a reason.</li>
-          <li><strong>Alert only on verified items.</strong> The deadline calendar, the alerts and the calendar export include verified obligations only. An unverified deadline is counted but never shown as reliable.</li>
-        </ol>
-        <h3>Why a person checks every field</h3>
-        <p>A missed renewal or notice date can cost a full contract year. Sampling a share of extractions would be faster, but a single miss is the failure that matters, so this design checks 100% of fields and uses automation to make each check quick: the clause is one click away and highlighted.</p>
-        <h3>Date conventions</h3>
-        <p>Notice deadlines are read conservatively, because a notice that arrives one day late is a missed notice. A 12-month term runs through the day before its anniversary. A notice date "at least N days before the end" is N calendar days before that last day, and where notice must arrive before that date, the tracker shows the day before it as the last safe day. Each dated obligation states its reading of the contract in plain words, and the reviewer confirms that reading as part of the date check. A clause that can be read two ways goes to a lawyer.</p>
-      </div>
-    </section>
-  </main>
+        <div class="steps">
+          <div class="step"><h3><span>1</span>Extract</h3><p><code>tools/extract.py</code> sends an agreement to Claude, which returns key terms (dates, terms, notice periods) and obligations as structured data. Each item carries the exact clause it relies on. The model never computes a date; it describes a rule, such as "30 days before each anniversary of the Order Date."</p></div>
+          <div class="step"><h3><span>2</span>Check automatically</h3><p><code>tools/build_schedule.py</code> confirms that every quoted clause appears word for word in the source document and that every key term's value matches its own quote, for example that "January 5, 2026" really is 2026-01-05. Then it computes each deadline from the rule. Any failure stops the build, and CI runs this check on every push.</p></div>
+          <div class="step"><h3><span>3</span>Verify by hand</h3><p>Every obligation starts as unverified. A reviewer opens the source clause, confirms the owner, the date rule and its reading of the contract, and the action, then signs off. A wrong item is rejected with a reason.</p></div>
+          <div class="step"><h3><span>4</span>Alert only on verified items</h3><p>The deadline calendar, the alerts and the calendar export include verified obligations only. An unverified deadline is counted but never shown as reliable.</p></div>
+        </div>
+      </section>
 
-  <aside id="source" class="source" hidden aria-label="Source document">
-    <div class="source-head">
-      <div>
-        <div class="source-kicker">Source</div>
-        <div id="source-title" class="source-title"></div>
-      </div>
-      <button id="source-close" class="btn ghost" aria-label="Close source">Close</button>
+      <section id="why">
+        <h2>Why a person checks every field</h2>
+        <p class="point">A missed renewal or notice date can cost a full contract year. Sampling a share of extractions would be faster, but a single miss is the failure that matters, so this design checks 100% of fields and uses automation to make each check quick: the clause is one click away and highlighted.</p>
+      </section>
+
+      <section id="dates">
+        <h2>Date conventions</h2>
+        <p class="point">Notice deadlines are read conservatively, because a notice that arrives one day late is a missed notice. A 12-month term runs through the day before its anniversary. A notice date "at least N days before the end" is N calendar days before that last day, and where notice must arrive before that date, the tracker shows the day before it as the last safe day. Each dated obligation states its reading of the contract in plain words, and the reviewer confirms that reading as part of the date check. A clause that can be read two ways goes to a lawyer.</p>
+      </section>
     </div>
-    <div id="source-body" class="source-body"></div>
-  </aside>
+
+    <aside class="side" aria-label="About this build">
+      <nav aria-label="On this page"><a href="#tool">Review queue</a><a href="#ahead">Deadlines ahead</a><a href="#how">How it works</a><a href="#why">Why every field</a><a href="#dates">Date conventions</a></nav>
+      <div><h3>Data</h3><p>Three sample agreements with fictional parties, built on Common Paper templates (CC BY 4.0): 13 obligations (6 dated, 7 triggered by events) and 35 source quotes. Review choices are saved only in this browser. Not legal advice.</p></div>
+      <div><h3>Run it yourself</h3><p>Static page, no build step. Add <code>?today=2026-11-19</code> to the URL to view the tracker as of a fixed date.</p><pre>python3 tools/build_schedule.py \
+  --check
+python3 -m unittest discover tools
+python3 -m http.server 8000</pre></div>
+      <div><a class="pill" href="https://github.com/pg2342-hub/contract-obligation-tracker">Code on GitHub</a></div>
+    </aside>
+  </div>
+</main>
 
   <script src="app.js"></script>
 <!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/contract-obligation-tracker">github.com/pg2342-hub/contract-obligation-tracker</a></footer><!-- /demo-chrome -->

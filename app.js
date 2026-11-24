@@ -122,24 +122,74 @@ function openSource(docId, quoteText) {
     appendText(raw);
   }
   $("#source-title").textContent = `${docTitle(docId)} (${docId}.md)`;
-  $("#source").hidden = false;
-  if (markEl) markEl.scrollIntoView({ block: "center" });
+  $("#source").classList.add("open");
+  // Scroll only the document pane, never the page, so the queue stays where the reviewer left it.
+  if (markEl) body.scrollTop = Math.max(0, markEl.offsetTop - Math.min(160, body.clientHeight / 3));
   else body.scrollTop = 0;
 }
-$("#source-close").addEventListener("click", () => { $("#source").hidden = true; });
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#source").hidden = true; });
+// On wide screens the source is a docked pane beside the queue; on narrow ones it slides over the page.
+const docked = window.matchMedia("(min-width: 1100px)");
+function closeSource() { if (!docked.matches) $("#source").classList.remove("open"); }
+$("#source-close").addEventListener("click", closeSource);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSource(); });
 
 // ---------- rendering ----------
 
 function render() {
   renderStats();
-  for (const t of ["review", "deadlines", "agreements", "how"]) {
+  for (const t of ["review", "deadlines", "agreements"]) {
     $(`#tab-${t}`).hidden = state.tab !== t;
     document.querySelector(`[data-tab="${t}"]`).setAttribute("aria-selected", String(state.tab === t));
   }
   if (state.tab === "review") { renderReview(); updateVerifyButtons(); }
   if (state.tab === "deadlines") renderDeadlines();
   if (state.tab === "agreements") renderAgreements();
+  renderTimeline();
+}
+
+// ---------- deadlines ahead: a 12-month timeline, one lane per dated obligation ----------
+
+function addDays(iso, n) { return new Date(Date.parse(iso + "T00:00:00Z") + n * 86400000).toISOString().slice(0, 10); }
+function renderTimeline() {
+  const root = $("#timeline");
+  if (!root) return;
+  root.textContent = "";
+  const start = state.today, end = addDays(start, 365), span = daysBetween(start, end);
+  const pct = (iso) => Math.min(100, Math.max(0, (daysBetween(start, iso) / span) * 100));
+  const dated = state.schedule.obligations.filter((o) => o.kind === "dated");
+  const axis = h("div", { class: "tl-axis", "aria-hidden": "true" });
+  const s = new Date(start + "T00:00:00Z");
+  for (let i = 1; i <= 12; i++) {
+    const m = new Date(Date.UTC(s.getUTCFullYear(), s.getUTCMonth() + i, 1)).toISOString().slice(0, 10);
+    if (m > end) break;
+    const lab = new Date(m + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", timeZone: "UTC" });
+    if (pct(m) < 4) continue;
+    axis.append(h("span", { style: `left:${pct(m).toFixed(2)}%`, class: i % 2 ? "odd" : "" }, lab));
+  }
+  root.append(h("div", { class: "tl-row tl-head" }, h("div", { class: "tl-lab" }), h("div", { class: "tl-track" }, axis)));
+  let shown = 0, alerting = 0;
+  for (const o of dated) {
+    const st = review(o.id).status;
+    const occ = o.occurrences.filter((x) => x.date >= start && x.date <= end);
+    const track = h("div", { class: "tl-track" });
+    for (const x of occ) {
+      const from = addDays(x.date, -(o.alert_days || 14));
+      track.append(h("i", { class: `tl-win ${st}`, style: `left:${pct(from).toFixed(2)}%;width:${(pct(x.date) - pct(from)).toFixed(2)}%` }));
+      track.append(h("i", { class: `tl-dot ${st}`, style: `left:${pct(x.date).toFixed(2)}%`, title: `${fmtDate(x.date)} · ${x.label}` }));
+      shown++; if (st === "verified") alerting++;
+    }
+    const next = occ[0];
+    root.append(h("div", { class: `tl-row ${st}` },
+      h("div", { class: "tl-lab" }, h("b", {}, o.title),
+        h("span", {}, `${agreementOf(o).title} · `, next ? fmtDate(next.date) : "nothing in the next 12 months", occ.length > 1 ? ` and ${occ.length - 1} more` : "")),
+      track));
+  }
+  root.append(h("div", { class: "tl-foot" },
+    h("div", { class: "legend", "aria-hidden": "true" },
+      h("span", {}, h("i", { class: "lg verified" }), "Verified, will alert"),
+      h("span", {}, h("i", { class: "lg unverified" }), "Waiting for review, no alert"),
+      h("span", {}, h("i", { class: "lg rejected" }), "Rejected")),
+    h("p", {}, `${shown} dates in this window; ${alerting} of them will alert.`)));
 }
 
 function counts() {
@@ -412,6 +462,8 @@ $("#today").addEventListener("change", (e) => { if (e.target.value) { state.toda
     await Promise.all(ids.map(async (id) => { state.docs[id] = await (await fetch(`data/documents/${id}.md`)).text(); }));
     render();
     updateVerifyButtons();
+    // Docked: start with the first clause open, so the workspace shows a real source.
+    if (docked.matches) { const o = state.schedule.obligations[0]; openSource(o.quotes[0].doc, o.quotes[0].text); }
   } catch (e) {
     $("#tab-review").append(h("p", { class: "empty" }, "Could not load data/schedule.json. Serve this folder over HTTP (for example: python3 -m http.server) rather than opening the file directly."));
   }
